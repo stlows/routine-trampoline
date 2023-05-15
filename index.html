@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Générateur de routine de trampoline</title>
+  <title>Trampoline routine generator</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="overlay.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,14 +41,14 @@
         Trampo-Mur <span class="checkmark">✅</span>
       </div> -->
     </div>
-    <h2>Nombre de mouvements</h2>
+    <h2>Number of moves</h2>
     <div>
       <input type="number" value="10" id="nombreMouvements" />
     </div>
     <div>
-      <button id="create" onclick="create()">Générer une routine</button>
+      <button id="create" onclick="create()">Make me flip !</button>
     </div>
-    <a href="#" onclick="listerMouvements(event)">Liste des mouvements</a>
+    <a href="#" onclick="listerMouvements(event)">Move list</a>
   </div>
 
   <div class="overlay" id="mouvements-overlay">
@@ -63,6 +63,8 @@
       <!-- <p>Taper un mouvement pour l'exclure.</p> -->
       <!-- <p>Taper un mouvement exclu pour le ré-inclure.</p> -->
       <div id="mouvements"></div>
+      <p>To suggest a new move or to report a bug, write me an email at: <a href="mailto:vincent_beaulieu@live.ca">vincent_beaulieu@live.ca</a></p>
+      <p>Created by <a href="http://vbeaulieu.com">Vincent Beaulieu</a></p>
     </div>
   </div>
 

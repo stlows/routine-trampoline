@@ -11,6 +11,12 @@
   background: linear-gradient(315deg, #e4e4e4 0%, #ffffff 100%);
 }
 
+.overlay a {
+  color: rgb(12, 12, 121);
+  display: inline;
+  padding: 0;
+}
+
 @media screen and (min-width: 800px) {
   .overlay-content {
     max-width: 500px;
@@ -32,11 +38,11 @@
   cursor: pointer;
 }
 
-.overlay .close-button > .close {
+.overlay .close-button>.close {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-.overlay .close-button > .close > span {
+.overlay .close-button>.close>span {
   display: block;
   position: absolute;
   width: 3px;
@@ -44,7 +50,7 @@
   background-color: black;
 }
 
-.overlay .close-button > .close > .x1 {
+.overlay .close-button>.close>.x1 {
   transform: rotate(90deg);
 }
 

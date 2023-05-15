@@ -4,6 +4,19 @@ const routine = document.getElementById("routine");
 const diffultesRange = document.querySelectorAll("input[type='range']")
 const errorCustomDifficulty = document.getElementById("sumNot100Error")
 
+const version = 1.1
+
+function checkVersion(){
+  if(!localStorage.getItem("version")){
+    localStorage.setItem("exclusions", JSON.stringify([]))
+  }
+  else if(localStorage.getItem("version") < version){
+    localStorage.setItem("exclusions", JSON.stringify([]))
+  }
+  localStorage.setItem("version", version)
+}
+checkVersion()
+
 const difficultyPercentage = {
   easy: {easy: 100, medium: 0, hard: 0, extreme: 0},
   medium: {easy: 60, medium: 40, hard: 0, extreme: 0},
@@ -20,10 +33,11 @@ const exclusions =
 const tricks = {
   Feet: {
     easy: [
-      { name: "Back", to: "Back" },
-      { name: "Belly", to: "Front" },
-      { name: "Groupé", to: "Feet" },
-      { name: "Carpé", to: "Feet" },
+      { name: "Back-Drop", to: "Back" },
+      { name: "Front-Drop", to: "Front" },
+      { name: "Tuck (Groupé)", to: "Feet" },
+      { name: "Pike (Carpé)", to: "Feet" },
+      { name: "Straddle (Écart)", to: "Feet" },
       { name: "360", to: "Feet" },
       { name: "180", to: "Feet" },
     ],
@@ -71,9 +85,9 @@ const tricks = {
   },
   Back: {
     easy: [
-      { name: "Back drop", to: "Back" },
+      { name: "Back-Drop", to: "Back" },
       { name: "Craddle", to: "Back" },
-      { name: "Front drop", to: "Front" },
+      { name: "Front-Drop", to: "Front" },
       { name: "Half-Twist to Feet", to: "Feet" },
       { name: "Pullover", to: "Feet" },
     ],
@@ -99,8 +113,8 @@ const tricks = {
   },
   Front: {
     easy: [
-      { name: "Back", to: "Back" },
-      { name: "Front", to: "Front" },
+      { name: "Back-Drop", to: "Back" },
+      { name: "Front-Drop", to: "Front" },
       { name: "Feet", to: "Feet" },
     ],
     medium: [{ name: "Cody", to: "Feet" }],
@@ -181,8 +195,13 @@ function create() {
   let position = "Feet"
   for (let i = 0; i < nombreMouvements; i++) {
     let difficulty = randomDifficulty(difficultyPercentage[difficulteSelectionnee])
-    observedDifficulty[difficulty]++
     let move = randomMoveFrom(position, difficulty);
+    if(!move){
+      // if no move from that position for that difficulty, we default to Feet.
+      difficulty = "easy"
+      move = { name: "Feet", to: "Feet"}
+    }
+    observedDifficulty[difficulty]++
     const li = document.createElement("li");
     li.innerText = move.name;
     position = move.to
@@ -209,7 +228,7 @@ function randomDifficulty(percentages){
 }
 
 function randomMoveFrom(position, difficulty){
-  return tricks[position][difficulty].random()
+  return tricks[position][difficulty].filter(move => !exclusions.includes(`${position}|${move.name}`)).random()
 }
 
 function tricksByDifficulty(difficulty) {
