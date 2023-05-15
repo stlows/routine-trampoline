@@ -25,6 +25,10 @@ button {
   margin-bottom: 1em;
 }
 
+.italic {
+  font-style: italic;
+}
+
 h2 {
   font-size: 1em;
   font-weight: 300;
