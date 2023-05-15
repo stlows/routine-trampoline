@@ -1,67 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Générateur de routine de trampoline</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="overlay.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Générateur de routine de trampoline</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="overlay.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
-</head>
-
-<body>
-  <div class="content">
-    <h2>Difficultés des mouvements</h2>
-    <div class="difficultes">
-      <div class="difficulte selected" data-difficulte="Facile">Facile <span class="checkmark">✅</span></div>
-      <div class="difficulte" data-difficulte="Medium">Medium <span class="checkmark">✅</span></div>
-      <div class="difficulte" data-difficulte="Difficile">Difficile <span class="checkmark">✅</span></div>
-      <div class="difficulte" data-difficulte="Trampo-Mur">Trampo-Mur <span class="checkmark">✅</span></div>
-    </div>
-    <h2>Nombre de mouvements</h2>
-    <div>
-      <input type="number" value="10" id="nombreMouvements" />
-    </div>
-    <div>
-      <button id="create" onclick="create()">Générer une routine</button>
-    </div>
-    <a href="#" onclick="listerMouvements(event)">Liste des mouvements</a>
-  </div>
-
-  <div class="overlay" id="mouvements-overlay">
-    <div class="overlay-content">
-      <div class="close-button" onclick="toggleOverlay('mouvements-overlay')">
-        <div class="close">
-          <span class="x1"></span>
-          <span class="x2"></span>
+  <body>
+    <div class="content">
+      <h2>Difficultés des mouvements</h2>
+      <div class="difficultes">
+        <div class="difficulte selected" data-difficulte="Facile">
+          Facile <span class="checkmark">✅</span>
+        </div>
+        <div class="difficulte" data-difficulte="Medium">
+          Medium <span class="checkmark">✅</span>
+        </div>
+        <div class="difficulte" data-difficulte="Difficile">
+          Difficile <span class="checkmark">✅</span>
+        </div>
+        <div class="difficulte" data-difficulte="Trampo-Mur">
+          Trampo-Mur <span class="checkmark">✅</span>
         </div>
       </div>
-      <h1>Liste des mouvements</h1>
-      <p>Taper un mouvement pour l'exclure.</p>
-      <p>Taper un mouvement exclu pour le ré-inclure.</p>
-      <div id="mouvements"></div>
-    </div>
-
-  </div>
-
-  <div class="overlay" id="routine-overlay">
-    <div class="overlay-content">
-      <div class="close-button" onclick="toggleOverlay('routine-overlay')">
-        <div class="close">
-          <span class="x1"></span>
-          <span class="x2"></span>
-        </div>
+      <h2>Nombre de mouvements</h2>
+      <div>
+        <input type="number" value="10" id="nombreMouvements" />
       </div>
-      <h1>Routine</h1>
-      <div id="routine"></div>
+      <div>
+        <button id="create" onclick="create()">Générer une routine</button>
+      </div>
+      <a href="#" onclick="listerMouvements(event)">Liste des mouvements</a>
     </div>
-  </div>
 
-  <script src="app.js"></script>
-</body>
+    <div class="overlay" id="mouvements-overlay">
+      <div class="overlay-content">
+        <div class="close-button" onclick="toggleOverlay('mouvements-overlay')">
+          <div class="close">
+            <span class="x1"></span>
+            <span class="x2"></span>
+          </div>
+        </div>
+        <h1>Liste des mouvements</h1>
+        <!-- <p>Taper un mouvement pour l'exclure.</p> -->
+        <!-- <p>Taper un mouvement exclu pour le ré-inclure.</p> -->
+        <div id="mouvements"></div>
+      </div>
+    </div>
 
+    <div class="overlay" id="routine-overlay">
+      <div class="overlay-content">
+        <div class="close-button" onclick="toggleOverlay('routine-overlay')">
+          <div class="close">
+            <span class="x1"></span>
+            <span class="x2"></span>
+          </div>
+        </div>
+        <h1>Routine</h1>
+        <div id="routine"></div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>

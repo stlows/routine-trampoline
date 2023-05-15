@@ -32,11 +32,11 @@
   cursor: pointer;
 }
 
-.overlay .close-button>.close {
+.overlay .close-button > .close {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-.overlay .close-button>.close>span {
+.overlay .close-button > .close > span {
   display: block;
   position: absolute;
   width: 3px;
@@ -44,7 +44,7 @@
   background-color: black;
 }
 
-.overlay .close-button>.close>.x1 {
+.overlay .close-button > .close > .x1 {
   transform: rotate(90deg);
 }
 
@@ -54,6 +54,7 @@
 
 .overlay h2 {
   font-weight: 500;
+  font-size: 1.5em;
 }
 
 .overlay ul {
@@ -63,6 +64,7 @@
 .overlay li {
   margin-bottom: 5px;
   padding: 5px 0;
+  list-style-type: none;
 }
 
 #routine-overlay ul {
@@ -74,12 +76,12 @@
   margin-bottom: 10px;
 }
 
-#mouvements-overlay li {
+#mouvements-overlay ul.difficulty li {
   cursor: pointer;
   list-style-type: "✅  ";
 }
 
-#mouvements-overlay .excluded {
+#mouvements-overlay ul.difficulty li.excluded {
   color: #808080;
   list-style-type: "❌  ";
 }
