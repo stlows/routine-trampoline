@@ -17,6 +17,15 @@
   padding: 0;
 }
 
+.overlay a.share-link {
+  display: block;
+  padding: 20px 10px;
+  background-color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
 @media screen and (min-width: 800px) {
   .overlay-content {
     max-width: 500px;
