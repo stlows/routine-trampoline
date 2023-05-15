@@ -17,7 +17,8 @@ body {
 }
 
 .content {
-  max-width: 90%;
+  width: 90%;
+  max-width: 400px;
 }
 
 button {
@@ -41,7 +42,7 @@ button {
   font-weight: 600;
 }
 
-.difficulte {
+.difficulte>div {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,12 +53,25 @@ button {
   color: var(--selected)
 }
 
-.difficulte.selected>.checkmark {
+.difficulte>p {
+  color: var(--textColor);
+  font-size: 0.6em;
+  margin-bottom: 0;
+  margin-top: 5px;
+  font-weight: 300;
+  display: none;
+}
+
+.difficulte.selected>p {
+  display: block;
+}
+
+.difficulte.selected .checkmark {
   opacity: 100%;
   transform: scale(1);
 }
 
-.difficulte>.checkmark {
+.difficulte .checkmark {
   opacity: 0;
   transform: scale(0);
   transition: opacity 200ms, border 200ms, transform 200ms;
@@ -93,5 +107,16 @@ button#create {
   display: block;
   width: 100%;
   text-transform: uppercase;
-  margin: 30px 0;
+  margin: 15px 0;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.error {
+  color: rgb(179, 68, 68);
 }

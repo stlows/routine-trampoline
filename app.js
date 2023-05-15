@@ -1,6 +1,16 @@
 const difficultes = document.querySelectorAll(".difficulte");
 const mouvements = document.getElementById("mouvements");
 const routine = document.getElementById("routine");
+const diffultesRange = document.querySelectorAll("input[type='range']")
+const errorCustomDifficulty = document.getElementById("sumNot100Error")
+
+const difficultyPercentage = {
+  easy: {easy: 100, medium: 0, hard: 0, extreme: 0},
+  medium: {easy: 60, medium: 40, hard: 0, extreme: 0},
+  hard: {easy: 30, medium: 40, hard: 30, extreme: 0},
+  extreme:{easy: 20, medium: 30, hard:30, extreme:20},
+  custom: {easy: 30, medium: 50, hard: 20, extreme:0},
+}
 
 const exclusions =
   JSON.parse(localStorage.getItem("exclusions")) ||
@@ -104,12 +114,6 @@ function toggleOverlay(id) {
   document.getElementById(id).classList.toggle("active");
 }
 
-difficultes.forEach((d) => {
-  d.addEventListener("click", (e) => {
-    d.classList.toggle("selected");
-  });
-});
-
 function fillTricks() {
   Object.keys(tricks).forEach((from) => {
     const titleEl = document.createElement("h2");
@@ -126,10 +130,11 @@ function fillTricks() {
       tricks[from][difficulty].forEach((move) => {
         const liMove = document.createElement("li");
         liMove.innerText = move.name;
-        if (exclusions.includes(`${from}|${move.name}`)) {
-          li.classList.add("excluded");
+        const key = `${from}|${move.name}`
+        if (exclusions.includes(key)) {
+          liMove.classList.add("excluded");
         }
-        li.addEventListener("click", (e) => toggleExlcusion(e.target));
+        liMove.addEventListener("click", (e) => toggleExclusion(e.target, key));
         ulDiff.appendChild(liMove);
         li.appendChild(ulDiff);
       });
@@ -139,12 +144,12 @@ function fillTricks() {
   });
 }
 
-function toggleExlcusion(li) {
+function toggleExclusion(li, key) {
   if (li.classList.contains("excluded")) {
-    unexclude(li.innerText);
+    unexclude(key);
     li.classList.remove("excluded");
   } else {
-    exclude(li.innerText);
+    exclude(key);
     li.classList.add("excluded");
   }
 }
@@ -161,30 +166,50 @@ function unexclude(move) {
 
 function create() {
   const nombreMouvements = document.getElementById("nombreMouvements").value;
-  const difficultesSelectionnes = Array.from(
-    document.querySelectorAll(".difficulte.selected")
-  )
-    .map((e) => e.dataset.difficulte)
-    .filter((d) => tricksByDifficulty(d).length > 0);
-  if (difficultesSelectionnes.length === 0) {
-    return;
-  }
-  let moves = difficultesSelectionnes.map((d) => tricksByDifficulty(d)).flat();
+  const difficulteSelectionnee = document.querySelector(".difficulte.selected").dataset.difficulte
+   if(difficulteSelectionnee === "custom" && !checkCustomSum()){
+    return
+   }
+
   routine.innerHTML = "";
   const description = document.createElement("h2");
-  description.innerText = `${nombreMouvements} mouvements ${difficultesSelectionnes.join(
-    " ou "
-  )} parmis ${moves.length} mouvements possibles.`;
+  description.innerText = `${difficulteSelectionnee} (${nombreMouvements} moves)`;
+  let observedDifficulty = {easy: 0, medium: 0, hard: 0, extreme: 0}
+  
   routine.appendChild(description);
   const ul = document.createElement("ul");
+  let position = "Feet"
   for (let i = 0; i < nombreMouvements; i++) {
-    let move = moves.random();
+    let difficulty = randomDifficulty(difficultyPercentage[difficulteSelectionnee])
+    observedDifficulty[difficulty]++
+    let move = randomMoveFrom(position, difficulty);
     const li = document.createElement("li");
-    li.innerText = move;
+    li.innerText = move.name;
+    position = move.to
     ul.appendChild(li);
   }
+  const definition = document.createElement("p");
+  definition.innerText = formatDifficulty(observedDifficulty);
+  routine.appendChild(definition);
+
   routine.appendChild(ul);
   toggleOverlay("routine-overlay");
+}
+
+function randomDifficulty(percentages){
+  let sum = 0
+  const rnd = Math.random() * 100
+  for(let i = 0; i < Object.keys(percentages).length; i++){
+    let difficulty = Object.keys(percentages)[i]
+    sum += percentages[difficulty]
+    if(rnd < sum){
+      return difficulty
+    }
+  }
+}
+
+function randomMoveFrom(position, difficulty){
+  return tricks[position][difficulty].random()
 }
 
 function tricksByDifficulty(difficulty) {
@@ -199,3 +224,66 @@ function listerMouvements(e) {
   e.preventDefault();
   toggleOverlay("mouvements-overlay");
 }
+
+difficultes.forEach((d) => {
+  d.addEventListener("click", (e) => {
+    difficultes.forEach(d => {
+      d.classList.remove("selected");
+    })
+    d.classList.toggle("selected");
+    if(d.dataset.difficulte === 'custom'){
+      toggleOverlay("custom-difficuly-overlay")
+    }
+  });
+});
+
+function updateDifficultesDom(){
+  // Definitions
+  Array.from(document.querySelectorAll(".difficulte .definition")).forEach(el => {
+    el.innerText = formatDifficulty(difficultyPercentage[el.dataset.difficulte], "%")
+  })
+
+  // Slider's value
+  Array.from(diffultesRange).forEach(el => {
+    el.value = difficultyPercentage.custom[el.dataset.difficulty]
+  })
+  // Slider's label
+  Object.keys(tricks.Feet).forEach(d => {
+    const label = document.querySelector(`label[for=${d}]`)
+    label.innerText = `${difficultyPercentage.custom[d]} % ${d}`
+  })
+
+  // Error message if total is different from 100
+  checkCustomSum()
+}
+
+function formatDifficulty(difficulty, unit = ""){
+  return Object.keys(difficulty).filter(d => difficulty[d] > 0).map(d => `${difficulty[d]}${unit} ${d}`).join(" - ")
+}
+
+function checkCustomSum(){
+  const total = Object.keys(difficultyPercentage.custom).reduce((acc, current) => acc + parseInt(difficultyPercentage.custom[current]), 0)
+  if(total !== 100){
+    errorCustomDifficulty.innerText = `Sum must be 100%. Now it is ${total}%`
+    document.getElementById("custom-difficuly-overlay").classList.add("active")
+    return false
+  }else{
+    errorCustomDifficulty.innerText = ""
+    return true
+  }
+}
+
+function updateCustomDifficulty(){
+  Array.from(diffultesRange).forEach(el => {
+    difficultyPercentage.custom[el.dataset.difficulty] = el.value
+  })
+  updateDifficultesDom()
+}
+diffultesRange.forEach(d => {
+  d.addEventListener("change", updateCustomDifficulty)
+})
+
+updateDifficultesDom()
+
+updateCustomDifficulty()
+
