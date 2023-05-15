@@ -17,18 +17,6 @@ function checkVersion(){
 }
 checkVersion()
 
-function checkRoutineUrl(){
-  const urlParams = new URLSearchParams(window.location.search);
-  const routine = urlParams.get('routine');
-  if(routine){
-    urlParams.delete("routine")
-    window.history.pushState({}, document.title, window.location.pathname);
-    console.log(atob(routine))
-  }
-}
-
-checkRoutineUrl()
-
 const difficultyPercentage = {
   easy: {easy: 100, medium: 0, hard: 0, extreme: 0},
   medium: {easy: 60, medium: 40, hard: 0, extreme: 0},
@@ -192,7 +180,6 @@ function unexclude(move) {
 
 function create() {
   const nombreMouvements = document.getElementById("nombreMouvements").value;
-  let moves = []
   const difficulteSelectionnee = document.querySelector(".difficulte.selected").dataset.difficulte
    if(difficulteSelectionnee === "custom" && !checkCustomSum()){
     return
@@ -213,7 +200,6 @@ function create() {
       difficulty = "easy"
       move = { name: "Feet", to: "Feet"}
     }
-    moves.push(move.name)
     observedDifficulty[difficulty]++
     const li = document.createElement("li");
     li.innerText = move.name;
@@ -224,14 +210,7 @@ function create() {
   definition.innerText = formatDifficulty(observedDifficulty);
   routine.appendChild(definition);
   routine.appendChild(ul);
-
-  const encoded = btoa(moves.join("|"))
-  const shareLink = document.createElement("a");
-  shareLink.href = `${window.location.origin}${window.location.pathname}?routine=${encoded}`
-  shareLink.innerText = "Copy this routine's link"
-  shareLink.classList.add("share-link")
-
-  routine.appendChild(shareLink)
+ 
   toggleOverlay("routine-overlay");
 }
 
