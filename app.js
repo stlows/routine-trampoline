@@ -38,6 +38,7 @@ const tricks = {
       { name: "Tuck (Groupé)", to: "Feet" },
       { name: "Pike (Carpé)", to: "Feet" },
       { name: "Straddle (Écart)", to: "Feet" },
+      { name: "Seat", to: "Seat" },
       { name: "360", to: "Feet" },
       { name: "180", to: "Feet" },
     ],
@@ -46,6 +47,7 @@ const tricks = {
       { name: "1 and 1/4 Backflip", to: "Back" },
       { name: "Frontflip", to: "Feet" },
       { name: "Backflip", to: "Feet" },
+      { name: "Sideflip", to: "Feet" },
       { name: "Backfull", to: "Feet" },
       { name: "Barani", to: "Feet" },
       { name: "Arabian", to: "Feet" },
@@ -65,6 +67,8 @@ const tricks = {
       { name: "Half In", to: "Feet" },
       { name: "Front Barani", to: "Feet" },
       { name: "Double Full", to: "Feet" },
+      { name: "900", to: "Feet" },
+      { name: "1080", to: "Feet" },
     ],
     extreme: [
       { name: "2 and 3/4", to: "Back" },
@@ -81,6 +85,8 @@ const tricks = {
       { name: "Triple Full", to: "Feet" },
       { name: "Quad Full", to: "Feet" },
       { name: "Adolph", to: "Feet" },
+      { name: "1260", to: "Feet" },
+      { name: "1440", to: "Feet" },
     ],
   },
   Back: {
@@ -95,12 +101,14 @@ const tricks = {
       { name: "Porpoise", to: "Back" },
       { name: "Cat-twist", to: "Back" },
       { name: "Corkskrew", to: "Back" },
+      { name: "Half Turn-Table", to: "Back" },
       { name: "Full-Twist to Feet", to: "Feet" },
       { name: "Ballout", to: "Feet" },
       { name: "Kaboom", to: "Feet" },
       { name: "Barani Ballout", to: "Feet" },
     ],
     hard: [
+      { name: "360 Turn-Table", to: "Back" },
       { name: "Double Cat-twist", to: "Back" },
       { name: "Double Corkskrew", to: "Back" },
     ],
@@ -117,9 +125,33 @@ const tricks = {
       { name: "Front-Drop", to: "Front" },
       { name: "Feet", to: "Feet" },
     ],
-    medium: [{ name: "Cody", to: "Feet" }],
-    hard: [{ name: "Zack", to: "Feet" }],
+    medium: [
+      { name: "Cody", to: "Feet"},
+      { name: "Half Turn-Table", to: "Front" },
+    ],
+    hard: [
+      { name: "Zack", to: "Feet" },
+      { name: "360 Turn-Table", to: "Front" },
+    ],
   },
+  Seat: {
+    easy: [
+      {name: "Back-Drop", to: "Back"},
+      {name: "Front-Drop", to: "Front"},
+      {name: "Feet", to: "Feet"},
+    ],
+    medium: [
+      {name: "Craddle", to: "Seat"},
+      {name: "360 Back To Seat", to: "Seat"},
+    ],
+    hard: [
+      { name: "Frontflip", to: "Feet" },
+      { name: "Dive", to: "Back" }
+    ],
+    extreme: [
+      {name: "Double frontflip", to:"Feet"}
+    ]
+  }
 };
 
 fillTricks();
